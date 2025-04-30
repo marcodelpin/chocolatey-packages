@@ -15,6 +15,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0  # Fetch all history to ensure we can diff correctly
 
       - name: Setup Chocolatey
         uses: crazy-max/ghaction-chocolatey@v2
@@ -26,9 +28,11 @@ jobs:
         shell: pwsh
         run: |
           if ($env:GITHUB_EVENT_NAME -eq 'pull_request') {
-            $changed_files = git diff --name-only $env:GITHUB_BASE_REF...HEAD
+            git fetch origin $env:GITHUB_BASE_REF
+            $changed_files = git diff --name-only origin/$env:GITHUB_BASE_REF..HEAD
           } else {
-            $changed_files = git diff --name-only HEAD~1 HEAD
+            $last_successful_commit = git rev-parse --verify HEAD || git rev-parse --verify HEAD^1
+            $changed_files = git diff --name-only $last_successful_commit HEAD
           }
           
           $packages = @()
@@ -42,7 +46,7 @@ jobs:
           }
           
           $packages_json = ConvertTo-Json -Compress $packages
-          echo "::set-output name=packages::$packages_json"
+          echo "packages=$packages_json" >> $env:GITHUB_OUTPUT
 
       - name: Validate packages
         if: ${{ steps.changed_packages.outputs.packages != '[]' }}
