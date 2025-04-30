@@ -6,7 +6,7 @@ This repository contains a collection of Chocolatey packages that I maintain and
 
 | Package Name | Description | Version |
 |-------------|-------------|---------|
-| fsviewer | FastStone Image Viewer - Image viewer and editor | 7.8.0.20250428 |
+| faststone-image-viewer | FastStone Image Viewer - Image viewer and editor | 7.8.0.20250428 |
 
 ## How to Use These Packages
 
@@ -20,14 +20,14 @@ git clone https://github.com/marcodelpin/chocolatey-packages.git
 cd chocolatey-packages
 
 # Install a package by specifying the local path
-choco install fsviewer -s .\packages\fsviewer
+choco install faststone-image-viewer -s .\packages\faststone-image-viewer
 ```
 
 ### Direct Installation from GitHub Pages (if configured)
 
 ```powershell
 # Example of installation from GitHub Pages
-choco install fsviewer -s https://marcodelpin.github.io/chocolatey-packages/
+choco install faststone-image-viewer -s https://marcodelpin.github.io/chocolatey-packages/
 ```
 
 ### Installation from Custom Chocolatey Feed (if you have one)
@@ -37,7 +37,7 @@ choco install fsviewer -s https://marcodelpin.github.io/chocolatey-packages/
 choco source add -n=chocolatey-community -s="https://myget.org/F/chocolatey-community/api/v2" --priority=1
 
 # Install the package
-choco install fsviewer
+choco install faststone-image-viewer
 ```
 
 ## Requesting Package Updates
@@ -51,11 +51,12 @@ If you notice a package that needs updating, please open an issue with:
 ## Repository Structure
 
 ```
-packages/            # Contains all Chocolatey packages
-  ├── fsviewer/      # FastStone Image Viewer package
+packages/                      # Contains all Chocolatey packages
+  ├── faststone-image-viewer/  # FastStone Image Viewer package folder
+  │   └── faststone-image-viewer.nuspec  # Package with the new ID
   └── other-packages/
-tools/               # Utility scripts for package management
-docs/                # Documentation
+tools/                         # Utility scripts for package management
+docs/                          # Documentation
 ```
 
 ## Updating a Package
@@ -67,7 +68,7 @@ There are two ways to update packages:
    .\tools\update-package.ps1 -package_name "package-name" -new_version "x.y.z" -new_url "download-url"
    ```
 
-2. For packages with AU scripts (like fsviewer):
+2. For packages with AU scripts (like faststone-image-viewer):
    ```powershell
    cd packages\package-name
    .\update.ps1

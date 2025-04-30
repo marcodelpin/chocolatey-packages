@@ -150,7 +150,7 @@ function Find_Latest_Package {
             Write-Host "  $($i+1). $($nupkg_files[$i].Name)" -ForegroundColor Cyan
         }
         
-        Write-Host "`nTo push a specific version, use: .\tools\push-package.ps1 -package_name fsviewer -specific_nupkg 'fsviewer.7.8.0.20250501.nupkg'" -ForegroundColor Yellow
+        Write-Host "`nTo push a specific version, use: .\tools\push-package.ps1 -package_name fsviewer -specific_nupkg 'faststone-image-viewer.7.8.0.20250501.nupkg'" -ForegroundColor Yellow
         Write-Host "Or to use the latest version, add the -force parameter" -ForegroundColor Yellow
         
         return $null

@@ -8,7 +8,7 @@
     <title>FastStone Image Viewer</title>
     <authors>FastStone Soft</authors>
     <projectUrl>http://www.faststone.org/FSViewerDetail.htm</projectUrl>
-    <iconUrl>https://raw.githubusercontent.com/marcodelpin/chocolatey-packages/master/icons/fsviewer.png</iconUrl>
+    <iconUrl>https://raw.githubusercontent.com/marcodelpin/chocolatey-packages/master/icons/faststone-image-viewer.png</iconUrl>
     <licenseUrl>http://www.faststone.org/order.htm</licenseUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <tags>image viewer admin faststone</tags>    
@@ -21,7 +21,7 @@ let them know the package is no longer updating correctly.
     <releaseNotes>Updated to version 7.8.0.20250428 on 2025-04-28
 
 http://www.faststone.org/FSViewerDetail.htm#History</releaseNotes>
-    <packageSourceUrl>https://github.com/marcodelpin/chocolatey-packages/tree/master/packages/fsviewer</packageSourceUrl>
+    <packageSourceUrl>https://github.com/marcodelpin/chocolatey-packages/tree/master/packages/faststone-image-viewer</packageSourceUrl>
   </metadata>
   <files>
     <!-- this section controls what actually gets packaged into the Chocolatey package -->

@@ -1,4 +1,4 @@
-# FastStone Image Viewer (fsviewer)
+# FastStone Image Viewer (faststone-image-viewer)
 
 This is a Chocolatey package for FastStone Image Viewer, a fast, stable, and user-friendly image viewer with editing capabilities.
 
@@ -18,7 +18,7 @@ FastStone Image Viewer is an image viewer, browser, converter, and editor. It ha
 ## Installation
 
 ```powershell
-choco install fsviewer
+choco install faststone-image-viewer
 ```
 
 ## Package Updates
@@ -42,7 +42,7 @@ For complete release notes, visit: http://www.faststone.org/FSViewerDetail.htm#H
 This package follows the naming convention with underscores for field names in PowerShell scripts:
 
 ```powershell
-$package_name = 'fsviewer'
+$package_name = 'faststone-image-viewer'
 ```
 
 If you modify the package, make sure to follow this convention.

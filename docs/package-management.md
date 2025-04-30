@@ -25,12 +25,12 @@ This document explains how to manage Chocolatey packages in this repository.
 
 ```
 packages/
-└── fsviewer/
-    ├── fsviewer.nuspec
+└── faststone-image-viewer/               # Directory renamed to match package ID
+    ├── faststone-image-viewer.nuspec     # File renamed to match package ID
     ├── update.ps1
     └── tools/
-        ├── chocolateyInstall.ps1
-        └── chocolateyUninstall.ps1
+        ├── chocolateyinstall.ps1
+        └── chocolateyuninstall.ps1
 ```
 
 ## Updating Packages
@@ -41,13 +41,13 @@ There are two methods for updating packages:
 
 ```powershell
 # Basic usage
-.\tools\update-package.ps1 -package_name "fsviewer" -new_version "8.0.0"
+.\tools\update-package.ps1 -package_name "faststone-image-viewer" -new_version "8.0.0"
 
 # With new URL
-.\tools\update-package.ps1 -package_name "fsviewer" -new_version "8.0.0" -new_url "https://www.faststonesoft.net/DN/FSViewerSetup80.exe"
+.\tools\update-package.ps1 -package_name "faststone-image-viewer" -new_version "8.0.0" -new_url "https://www.faststonesoft.net/DN/FSViewerSetup80.exe"
 
 # With new URL and checksum
-.\tools\update-package.ps1 -package_name "fsviewer" -new_version "8.0.0" -new_url "https://www.faststonesoft.net/DN/FSViewerSetup80.exe" -new_checksum "f2e91e0d4999ee1772afb0986df1ecc825cb84b776536b7ed9ea3372dab551de" -checksum_type "sha256"
+.\tools\update-package.ps1 -package_name "faststone-image-viewer" -new_version "8.0.0" -new_url "https://www.faststonesoft.net/DN/FSViewerSetup80.exe" -new_checksum "f2e91e0d4999ee1772afb0986df1ecc825cb84b776536b7ed9ea3372dab551de" -checksum_type "sha256"
 ```
 
 The script will:
@@ -59,10 +59,10 @@ The script will:
 
 ### Method 2: Using AU (Automatic Updater)
 
-For packages with AU scripts like fsviewer:
+For packages with AU scripts like faststone-image-viewer:
 
 ```powershell
-cd packages\fsviewer
+cd packages\faststone-image-viewer
 .\update.ps1
 ```
 
@@ -71,9 +71,9 @@ cd packages\fsviewer
 Before submitting changes, test your package locally:
 
 ```powershell
-cd packages/fsviewer
+cd packages/faststone-image-viewer
 choco pack
-choco install fsviewer -s . --force
+choco install faststone-image-viewer -s . --force
 ```
 
 ## Publishing Packages
@@ -81,8 +81,8 @@ choco install fsviewer -s . --force
 After testing, commit and push your changes to GitHub:
 
 ```powershell
-git add packages/fsviewer
-git commit -m "Update fsviewer to version 8.0.0"
+git add packages/faststone-image-viewer
+git commit -m "Update faststone-image-viewer to version 8.0.0"
 git push
 ```
 
@@ -100,7 +100,7 @@ When creating or updating packages, use these standardized field names:
 
 ```powershell
 $error_message   = "Error during installation or update"
-$package_name    = "fsviewer"
+$package_name    = "faststone-image-viewer"
 $version         = "8.0.0"
 $url             = "https://www.faststonesoft.net/DN/FSViewerSetup80.exe"
 $checksum        = "f2e91e0d4999ee1772afb0986df1ecc825cb84b776536b7ed9ea3372dab551de"
@@ -113,7 +113,7 @@ This consistent naming helps with maintaining multiple packages and makes automa
 
 ## Existing Packages
 
-### fsviewer (FastStone Image Viewer)
+### faststone-image-viewer (FastStone Image Viewer)
 
 FastStone Image Viewer is a fast, stable, and user-friendly image viewer with editing and conversion capabilities.
 
