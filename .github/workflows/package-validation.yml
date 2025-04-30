@@ -1,0 +1,92 @@
+name: Package Validation
+
+on:
+  push:
+    paths:
+      - 'packages/**'
+  pull_request:
+    paths:
+      - 'packages/**'
+  workflow_dispatch:
+
+jobs:
+  validate:
+    runs-on: windows-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Setup Chocolatey
+        uses: crazy-max/ghaction-chocolatey@v2
+        with:
+          args: -v
+
+      - name: Find changed packages
+        id: changed_packages
+        shell: pwsh
+        run: |
+          if ($env:GITHUB_EVENT_NAME -eq 'pull_request') {
+            $changed_files = git diff --name-only $env:GITHUB_BASE_REF...HEAD
+          } else {
+            $changed_files = git diff --name-only HEAD~1 HEAD
+          }
+          
+          $packages = @()
+          foreach ($file in $changed_files) {
+            if ($file -match "^packages/([^/]+)/") {
+              $package_name = $Matches[1]
+              if ($packages -notcontains $package_name) {
+                $packages += $package_name
+              }
+            }
+          }
+          
+          $packages_json = ConvertTo-Json -Compress $packages
+          echo "::set-output name=packages::$packages_json"
+
+      - name: Validate packages
+        if: ${{ steps.changed_packages.outputs.packages != '[]' }}
+        shell: pwsh
+        run: |
+          $packages = ConvertFrom-Json '${{ steps.changed_packages.outputs.packages }}'
+          
+          foreach ($package_name in $packages) {
+            Write-Host "Validating package: $package_name"
+            $package_dir = "packages/$package_name"
+            
+            if (!(Test-Path "$package_dir/$package_name.nuspec")) {
+              Write-Host "::error::Missing nuspec file for $package_name"
+              exit 1
+            }
+            
+            if (!(Test-Path "$package_dir/tools/chocolateyInstall.ps1")) {
+              Write-Host "::error::Missing chocolateyInstall.ps1 for $package_name"
+              exit 1
+            }
+            
+            # Validate the nuspec file
+            choco pack "$package_dir/$package_name.nuspec" --out $package_dir
+            if ($LASTEXITCODE -ne 0) {
+              Write-Host "::error::Failed to pack $package_name"
+              exit 1
+            }
+            
+            # Validate the PowerShell scripts for syntax errors
+            $install_script = Get-Content "$package_dir/tools/chocolateyInstall.ps1" -Raw
+            $parsed = [System.Management.Automation.PSParser]::Tokenize($install_script, [ref]$null)
+            if ($? -eq $false) {
+              Write-Host "::error::Syntax error in chocolateyInstall.ps1 for $package_name"
+              exit 1
+            }
+            
+            if (Test-Path "$package_dir/tools/chocolateyUninstall.ps1") {
+              $uninstall_script = Get-Content "$package_dir/tools/chocolateyUninstall.ps1" -Raw
+              $parsed = [System.Management.Automation.PSParser]::Tokenize($uninstall_script, [ref]$null)
+              if ($? -eq $false) {
+                Write-Host "::error::Syntax error in chocolateyUninstall.ps1 for $package_name"
+                exit 1
+              }
+            }
+            
+            Write-Host "Package $package_name validation successful"
+          }

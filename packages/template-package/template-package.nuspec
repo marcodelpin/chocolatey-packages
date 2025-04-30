@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
+  <metadata>
+    <id>template-package</id>
+    <version>1.0.0</version>
+    <title>Template Package (Install)</title>
+    <authors>Your Name</authors>
+    <projectUrl>https://github.com/yourusername/chocolatey-packages</projectUrl>
+    <licenseUrl>https://example.com/license</licenseUrl>
+    <iconUrl>https://example.com/icon.png</iconUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <description>This is a template Chocolatey package example</description>
+    <summary>Short summary of what the package does</summary>
+    <tags>template example</tags>
+    <packageSourceUrl>https://github.com/yourusername/chocolatey-packages</packageSourceUrl>
+    <docsUrl>https://example.com/docs</docsUrl>
+    <bugTrackerUrl>https://github.com/yourusername/chocolatey-packages/issues</bugTrackerUrl>
+    <releaseNotes>Initial release</releaseNotes>
+  </metadata>
+  <files>
+    <file src="tools\**" target="tools" />
+  </files>
+</package>

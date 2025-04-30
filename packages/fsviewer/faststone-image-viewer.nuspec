@@ -1,0 +1,31 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<!-- Do not remove this test for UTF-8: if "Ω" doesn't appear as greek uppercase omega letter enclosed in quotation marks, you should use an editor that supports UTF-8, not this one. -->
+<package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
+  <metadata>
+    <id>faststone-image-viewer</id>
+    <version>7.8.0.20250428</version>
+    <owners>Marco Del Pin</owners>
+    <title>FastStone Image Viewer</title>
+    <authors>FastStone Soft</authors>
+    <projectUrl>http://www.faststone.org/FSViewerDetail.htm</projectUrl>
+    <iconUrl>https://raw.githubusercontent.com/marcodelpin/chocolatey-packages/master/icons/fsviewer.png</iconUrl>
+    <licenseUrl>http://www.faststone.org/order.htm</licenseUrl>
+    <requireLicenseAcceptance>false</requireLicenseAcceptance>
+    <tags>image viewer admin faststone</tags>    
+    <summary>FastStone Image Viewer is a fast, stable, user-friendly image browser, converter and editor</summary>
+    <description>FastStone Image Viewer is a fast, stable, user-friendly image browser, converter and editor. It has a nice array of features that include image viewing, management, comparison, red-eye removal, emailing, resizing, cropping, retouching and color adjustments. Its innovative but intuitive full-screen mode provides quick access to EXIF information, thumbnail browser and major functionalities via hidden toolbars that pop up when your mouse touches one of the four edges of the screen. Other features include a high quality magnifier and a musical slideshow with 150+ transitional effects, as well as lossless JPEG transitions, drop shadow effects, image annotation, scanner support, histogram and much more. It supports all major graphic formats (BMP, JPEG, JPEG 2000, animated GIF, PNG, PCX, PSD, EPS, TIFF, WMF, ICO and TGA) and popular digital camera RAW formats (CRW, CR2, NEF, PEF, RAF, MRW, ORF, SRF, ARW, SR2, RW2 and DNG). 
+**Please Note**: This is an automatically updated package. If you find it is 
+out of date by more than a day or two, please contact the maintainer(s) and
+let them know the package is no longer updating correctly.
+</description>
+    <releaseNotes>Updated to version 7.8.0.20250428 on 2025-04-28
+
+http://www.faststone.org/FSViewerDetail.htm#History</releaseNotes>
+    <packageSourceUrl>https://github.com/marcodelpin/chocolatey-packages/tree/master/packages/fsviewer</packageSourceUrl>
+  </metadata>
+  <files>
+    <!-- this section controls what actually gets packaged into the Chocolatey package -->
+    <file src="tools\**" target="tools" />
+    <!--Building from Linux? You may need this instead: <file src="tools/**" target="tools" />-->
+  </files>
+</package>
