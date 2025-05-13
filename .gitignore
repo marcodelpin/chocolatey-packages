@@ -31,3 +31,6 @@ $RECYCLE.BIN/
 *.tmp
 *.log
 .temp/
+
+# File con informazioni private
+docs/workflow-guide.md
