@@ -8,7 +8,7 @@
     <title>FastStone Image Viewer</title>
     <authors>FastStone Soft</authors>
     <projectUrl>http://www.faststone.org/FSViewerDetail.htm</projectUrl>
-    <iconUrl>https://raw.githubusercontent.com/marcodelpin/chocolatey-packages/master/icons/faststone-image-viewer.png</iconUrl>
+    <iconUrl>https://cdn.jsdelivr.net/gh/marcodelpin/chocolatey-packages/icons/faststone-image-viewer.png</iconUrl>
     <licenseUrl>http://www.faststone.org/order.htm</licenseUrl>
     <requireLicenseAcceptance>false</requireLicenseAcceptance>
     <tags>image viewer admin faststone</tags>    
