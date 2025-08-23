@@ -1,0 +1,69 @@
+name: Check Updates with Email Notification
+
+on:
+  schedule:
+    # Esegui ogni giorno alle 8:00 UTC
+    - cron: '0 8 * * *'
+  workflow_dispatch:  # Permette esecuzione manuale
+
+permissions:
+  contents: read
+  issues: write
+
+jobs:
+  check-update:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Check for FastStone updates
+      id: check
+      run: |
+        # Estrai versione corrente dal nuspec
+        if [ -f "packages/faststone-image-viewer/faststone-image-viewer.nuspec" ]; then
+          FULL_VERSION=$(grep '<version>' packages/faststone-image-viewer/faststone-image-viewer.nuspec | sed 's/.*<version>\(.*\)<\/version>.*/\1/')
+          CURRENT_VERSION=$(echo $FULL_VERSION | cut -d. -f1,2)
+          echo "Current version: $CURRENT_VERSION"
+        else
+          CURRENT_VERSION="0.0"
+        fi
+        
+        # Scarica pagina e estrai nuova versione
+        WEBPAGE=$(curl -s https://www.faststone.org/FSIVDownload.htm)
+        NEW_VERSION=$(echo "$WEBPAGE" | grep -oP 'FastStone Image Viewer \K[0-9]+\.[0-9]+' | head -1)
+        
+        echo "Latest version: $NEW_VERSION"
+        
+        # Set outputs
+        echo "current_version=$CURRENT_VERSION" >> $GITHUB_OUTPUT
+        echo "new_version=$NEW_VERSION" >> $GITHUB_OUTPUT
+        
+        if [ "$NEW_VERSION" != "$CURRENT_VERSION" ] && [ "$NEW_VERSION" != "0.0" ]; then
+          echo "update_available=true" >> $GITHUB_OUTPUT
+        else
+          echo "update_available=false" >> $GITHUB_OUTPUT
+        fi
+    
+    - name: Create Issue with mention
+      if: steps.check.outputs.update_available == 'true'
+      uses: actions/github-script@v6
+      with:
+        script: |
+          const newVersion = '${{ steps.check.outputs.new_version }}';
+          const currentVersion = '${{ steps.check.outputs.current_version }}';
+          
+          // Crea issue con @mention per garantire notifica
+          await github.rest.issues.create({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            title: `Update: FastStone Image Viewer ${newVersion} disponibile`,
+            body: `@${context.repo.owner} Nuovo aggiornamento disponibile!\n\nFastStone Image Viewer ${currentVersion} → ${newVersion}\n\nAggiorna con:\n\`\`\`\n./tools/update-package.ps1 -package_name "faststone-image-viewer" -new_version "${newVersion}"\n\`\`\``,
+            labels: ['update-available']
+          });
+    
+    - name: Send notification summary
+      if: steps.check.outputs.update_available == 'true'
+      run: |
+        echo "::notice title=Update Available::FastStone Image Viewer ${{ steps.check.outputs.new_version }} is available!"
+        echo "An Issue has been created with update instructions."

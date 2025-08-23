@@ -96,7 +96,7 @@ jobs:
             const issueBody = [
               '## Aggiornamento Disponibile',
               '',
-              `FastStone Image Viewer è stato aggiornato dalla versione **${currentVersion}** alla versione **${newVersion}**.`,
+              `@marcodelpin FastStone Image Viewer è stato aggiornato dalla versione **${currentVersion}** alla versione **${newVersion}**.`,
               '',
               '### Azioni richieste:',
               '1. Aggiorna il pacchetto usando:',
