@@ -5,6 +5,13 @@ on:
     # Esegui ogni giorno alle 8:00 UTC
     - cron: '0 8 * * *'
   workflow_dispatch:  # Permette esecuzione manuale
+  push:
+    paths:
+      - '.github/workflows/check-updates.yml'
+
+permissions:
+  contents: read
+  issues: write
 
 jobs:
   check-update:
@@ -32,6 +39,15 @@ jobs:
         else
           echo "update_available=false" >> $GITHUB_OUTPUT
         fi
+        
+        # Always show the result
+        echo "Update check completed. Update available: $([ "$NEW_VERSION" != "$CURRENT_VERSION" ] && echo "YES" || echo "NO")"
+    
+    - name: Show check results
+      run: |
+        echo "Update available: ${{ steps.check.outputs.update_available }}"
+        echo "Current version: ${{ steps.check.outputs.current_version }}"
+        echo "New version: ${{ steps.check.outputs.new_version }}"
     
     - name: Create Issue if update available
       if: steps.check.outputs.update_available == 'true'
