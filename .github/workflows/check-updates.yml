@@ -1,0 +1,87 @@
+name: Check FastStone Updates
+
+on:
+  schedule:
+    # Esegui ogni giorno alle 8:00 UTC
+    - cron: '0 8 * * *'
+  workflow_dispatch:  # Permette esecuzione manuale
+
+jobs:
+  check-update:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - uses: actions/checkout@v3
+    
+    - name: Check for FastStone updates
+      id: check
+      run: |
+        # Estrai versione corrente dal nuspec
+        CURRENT_VERSION=$(grep -oP '<version>\K[^<]+' packages/faststone-image-viewer/faststone-image-viewer.nuspec | cut -d. -f1,2)
+        echo "Current version: $CURRENT_VERSION"
+        
+        # Scarica pagina e estrai nuova versione
+        NEW_VERSION=$(curl -s https://www.faststone.org/FSIVDownload.htm | grep -oP 'FastStone Image Viewer \K[0-9]+\.[0-9]+' | head -1)
+        echo "Latest version: $NEW_VERSION"
+        
+        # Confronta versioni
+        if [ "$NEW_VERSION" != "$CURRENT_VERSION" ] && [ -n "$NEW_VERSION" ]; then
+          echo "update_available=true" >> $GITHUB_OUTPUT
+          echo "new_version=$NEW_VERSION" >> $GITHUB_OUTPUT
+          echo "current_version=$CURRENT_VERSION" >> $GITHUB_OUTPUT
+        else
+          echo "update_available=false" >> $GITHUB_OUTPUT
+        fi
+    
+    - name: Create Issue if update available
+      if: steps.check.outputs.update_available == 'true'
+      uses: actions/github-script@v6
+      with:
+        script: |
+          const newVersion = '${{ steps.check.outputs.new_version }}';
+          const currentVersion = '${{ steps.check.outputs.current_version }}';
+          
+          // Cerca se esiste già un issue per questa versione
+          const issues = await github.rest.issues.listForRepo({
+            owner: context.repo.owner,
+            repo: context.repo.repo,
+            labels: 'update-available',
+            state: 'open'
+          });
+          
+          const existingIssue = issues.data.find(issue => 
+            issue.title.includes(newVersion)
+          );
+          
+          if (!existingIssue) {
+            // Crea nuovo issue
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: `Update: FastStone Image Viewer ${newVersion} disponibile`,
+              body: `## Aggiornamento Disponibile
+              
+FastStone Image Viewer è stato aggiornato dalla versione **${currentVersion}** alla versione **${newVersion}**.
+
+### Azioni richieste:
+1. Aggiorna il pacchetto usando:
+   \`\`\`powershell
+   ./tools/update-package.ps1 -package_name "faststone-image-viewer" -new_version "${newVersion}"
+   \`\`\`
+2. Testa il pacchetto localmente
+3. Commit e push le modifiche
+4. Pubblica su Chocolatey
+
+### Link utili:
+- [Download page](https://www.faststone.org/FSIVDownload.htm)
+- [Changelog](http://www.faststone.org/FSViewerDetail.htm#History)
+
+---
+*Questo issue è stato creato automaticamente dal workflow di controllo aggiornamenti.*`,
+              labels: ['update-available', 'faststone-image-viewer']
+            });
+            
+            console.log(`Issue creato per la versione ${newVersion}`);
+          } else {
+            console.log(`Issue già esistente per la versione ${newVersion}`);
+          }
