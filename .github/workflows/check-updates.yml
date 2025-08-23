@@ -93,25 +93,27 @@ jobs:
           
           if (!existingIssue) {
             // Crea nuovo issue
-            const issueBody = `## Aggiornamento Disponibile
-
-FastStone Image Viewer è stato aggiornato dalla versione **${currentVersion}** alla versione **${newVersion}**.
-
-### Azioni richieste:
-1. Aggiorna il pacchetto usando:
-   \`\`\`powershell
-   ./tools/update-package.ps1 -package_name "faststone-image-viewer" -new_version "${newVersion}"
-   \`\`\`
-2. Testa il pacchetto localmente
-3. Commit e push le modifiche
-4. Pubblica su Chocolatey
-
-### Link utili:
-- [Download page](https://www.faststone.org/FSIVDownload.htm)
-- [Changelog](http://www.faststone.org/FSViewerDetail.htm#History)
-
----
-*Questo issue è stato creato automaticamente dal workflow di controllo aggiornamenti.*`;
+            const issueBody = [
+              '## Aggiornamento Disponibile',
+              '',
+              `FastStone Image Viewer è stato aggiornato dalla versione **${currentVersion}** alla versione **${newVersion}**.`,
+              '',
+              '### Azioni richieste:',
+              '1. Aggiorna il pacchetto usando:',
+              '   ```powershell',
+              `   ./tools/update-package.ps1 -package_name "faststone-image-viewer" -new_version "${newVersion}"`,
+              '   ```',
+              '2. Testa il pacchetto localmente',
+              '3. Commit e push le modifiche',
+              '4. Pubblica su Chocolatey',
+              '',
+              '### Link utili:',
+              '- [Download page](https://www.faststone.org/FSIVDownload.htm)',
+              '- [Changelog](http://www.faststone.org/FSViewerDetail.htm#History)',
+              '',
+              '---',
+              '*Questo issue è stato creato automaticamente dal workflow di controllo aggiornamenti.*'
+            ].join('\n');
             
             await github.rest.issues.create({
               owner: context.repo.owner,
