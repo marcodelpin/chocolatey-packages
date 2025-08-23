@@ -93,12 +93,8 @@ jobs:
           
           if (!existingIssue) {
             // Crea nuovo issue
-            await github.rest.issues.create({
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              title: `Update: FastStone Image Viewer ${newVersion} disponibile`,
-              body: `## Aggiornamento Disponibile
-              
+            const issueBody = `## Aggiornamento Disponibile
+
 FastStone Image Viewer è stato aggiornato dalla versione **${currentVersion}** alla versione **${newVersion}**.
 
 ### Azioni richieste:
@@ -115,7 +111,13 @@ FastStone Image Viewer è stato aggiornato dalla versione **${currentVersion}** 
 - [Changelog](http://www.faststone.org/FSViewerDetail.htm#History)
 
 ---
-*Questo issue è stato creato automaticamente dal workflow di controllo aggiornamenti.*`,
+*Questo issue è stato creato automaticamente dal workflow di controllo aggiornamenti.*`;
+            
+            await github.rest.issues.create({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              title: `Update: FastStone Image Viewer ${newVersion} disponibile`,
+              body: issueBody,
               labels: ['update-available', 'faststone-image-viewer']
             });
             
