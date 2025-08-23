@@ -3,7 +3,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>faststone-image-viewer</id>
-    <version>8.1</version>
+    <version>7.9</version>
     <owners>Marco Del Pin</owners>
     <title>FastStone Image Viewer</title>
     <authors>FastStone Soft</authors>
