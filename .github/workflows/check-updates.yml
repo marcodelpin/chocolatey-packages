@@ -23,25 +23,47 @@ jobs:
     - name: Check for FastStone updates
       id: check
       run: |
-        # Estrai versione corrente dal nuspec
-        CURRENT_VERSION=$(grep -oP '<version>\K[^<]+' packages/faststone-image-viewer/faststone-image-viewer.nuspec | cut -d. -f1,2)
-        echo "Current version: $CURRENT_VERSION"
+        # Debug: Show current directory and files
+        echo "Current directory: $(pwd)"
+        echo "Checking for nuspec file..."
+        ls -la packages/faststone-image-viewer/ || echo "Directory not found"
         
-        # Scarica pagina e estrai nuova versione
-        NEW_VERSION=$(curl -s https://www.faststone.org/FSIVDownload.htm | grep -oP 'FastStone Image Viewer \K[0-9]+\.[0-9]+' | head -1)
-        echo "Latest version: $NEW_VERSION"
-        
-        # Confronta versioni
-        if [ "$NEW_VERSION" != "$CURRENT_VERSION" ] && [ -n "$NEW_VERSION" ]; then
-          echo "update_available=true" >> $GITHUB_OUTPUT
-          echo "new_version=$NEW_VERSION" >> $GITHUB_OUTPUT
-          echo "current_version=$CURRENT_VERSION" >> $GITHUB_OUTPUT
+        # Estrai versione corrente dal nuspec (prendi solo major.minor)
+        if [ -f "packages/faststone-image-viewer/faststone-image-viewer.nuspec" ]; then
+          FULL_VERSION=$(grep '<version>' packages/faststone-image-viewer/faststone-image-viewer.nuspec | sed 's/.*<version>\(.*\)<\/version>.*/\1/')
+          CURRENT_VERSION=$(echo $FULL_VERSION | cut -d. -f1,2)
+          echo "Full version from nuspec: $FULL_VERSION"
+          echo "Current version (major.minor): $CURRENT_VERSION"
         else
-          echo "update_available=false" >> $GITHUB_OUTPUT
+          echo "ERROR: nuspec file not found!"
+          CURRENT_VERSION="0.0"
         fi
         
-        # Always show the result
-        echo "Update check completed. Update available: $([ "$NEW_VERSION" != "$CURRENT_VERSION" ] && echo "YES" || echo "NO")"
+        # Scarica pagina e estrai nuova versione
+        echo "Fetching FastStone website..."
+        WEBPAGE=$(curl -s https://www.faststone.org/FSIVDownload.htm)
+        echo "Extracting version..."
+        NEW_VERSION=$(echo "$WEBPAGE" | grep -oP 'FastStone Image Viewer \K[0-9]+\.[0-9]+' | head -1)
+        
+        if [ -z "$NEW_VERSION" ]; then
+          echo "WARNING: Could not extract version from website"
+          NEW_VERSION="0.0"
+        fi
+        
+        echo "Latest version from website: $NEW_VERSION"
+        
+        # Set outputs
+        echo "current_version=$CURRENT_VERSION" >> $GITHUB_OUTPUT
+        echo "new_version=$NEW_VERSION" >> $GITHUB_OUTPUT
+        
+        # Confronta versioni
+        if [ "$NEW_VERSION" != "$CURRENT_VERSION" ] && [ "$NEW_VERSION" != "0.0" ] && [ "$CURRENT_VERSION" != "0.0" ]; then
+          echo "update_available=true" >> $GITHUB_OUTPUT
+          echo "Update is available!"
+        else
+          echo "update_available=false" >> $GITHUB_OUTPUT
+          echo "No update available or error in version detection"
+        fi
     
     - name: Show check results
       run: |
