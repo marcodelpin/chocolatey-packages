@@ -3,8 +3,8 @@ $ErrorActionPreference = 'Stop';
 
 $package_name = 'faststone-image-viewer'
 $tools_dir   = "$(Split-Path -parent $MyInvocation.MyCommand.Definition)"
-$url = 'https://www.faststonesoft.net/DN/FSViewerSetup80.exe'
-$checksum32 = 'f2e91e0d4999ee1772afb0986df1ecc825cb84b776536b7ed9ea3372dab551de'
+$url = 'https://www.faststonesoft.net/DN/FSViewerSetup81.exe'
+$checksum32 = 'F4F804B3B645F3510BA29D57EE3E26FD7A032022F54C39ECEAEE42B4F4072113'
 
 $packageArgs = @{
   packageName   = $package_name
@@ -23,6 +23,7 @@ $packageArgs = @{
 }
 
 Install-ChocolateyPackage @packageArgs
+
 
 
 
