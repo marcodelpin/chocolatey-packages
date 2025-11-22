@@ -3,8 +3,8 @@ $ErrorActionPreference = 'Stop';
 
 $package_name = 'faststone-image-viewer'
 $tools_dir   = "$(Split-Path -parent $MyInvocation.MyCommand.Definition)"
-$url = 'https://www.faststonesoft.net/DN/FSViewerSetup81.exe'
-$checksum32 = 'F4F804B3B645F3510BA29D57EE3E26FD7A032022F54C39ECEAEE42B4F4072113'
+$url = 'https://www.faststonesoft.net/DN/FSViewerSetup82.exe'
+$checksum32 = 'EAC3D39FD452B3BE3ABE30077B26A6543F1769AAE7F99AA3C13190A232C354E1'
 
 $packageArgs = @{
   packageName   = $package_name
