@@ -1,10 +1,29 @@
-# CLAUDE.md
+<!-- INITCLA:FULL -->
+# CLAUDE.md - Chocolatey Packages Repository
 
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
 ## Repository Overview
 
 This is a Chocolatey packages repository containing community-maintained Windows software packages. The repository follows a standard Chocolatey package structure with automation tools for package management.
+
+<!-- Merged from Claude-Flow -->
+## Critical Execution Rules
+
+**ABSOLUTE RULES**:
+1. ALL operations MUST be concurrent/parallel in a single message when independent
+2. **NEVER save working files, text/mds and tests to the root folder**
+3. ALWAYS organize files in appropriate subdirectories
+4. Batch ALL related operations (TodoWrite, file ops, bash commands) in ONE message
+
+### File Organization Rules
+
+**NEVER save to root folder. Use these directories:**
+- `/packages` - Chocolatey package directories
+- `/tools` - Repository management scripts
+- `/docs` - Documentation and markdown files
+- `/icons` - Package icons for CDN hosting
+<!-- End Claude-Flow merge -->
 
 ## Key Commands
 
@@ -85,7 +104,7 @@ Packages with `update.ps1` files use AU framework:
 - `au_SearchReplace()`: Updates installation script with new URLs and checksums
 - Automatically calculates checksums for downloaded files
 
-##### Manual Update Pattern  
+##### Manual Update Pattern
 Uses `tools/update-package.ps1` for packages without AU automation:
 - Updates `.nuspec` version and release notes
 - Updates installation script variables
@@ -138,3 +157,55 @@ The `push-package.ps1` script implements secure API key storage:
 - **Source**: Scrapes version from FastStone website
 - **Current Version**: 7.8.0.20250428
 - **Special Notes**: Uses custom AU script that parses HTML to extract version numbers
+
+<!-- Merged from Claude-Flow -->
+## Claude-Flow Integration (Optional)
+
+This section provides optional Claude-Flow orchestration features for advanced automation workflows.
+
+### Quick Setup
+```bash
+# Add MCP servers (Claude Flow required, others optional)
+claude mcp add claude-flow npx claude-flow@alpha mcp start
+```
+
+### Available Agents for Package Development
+- `coder` - Implement package scripts
+- `reviewer` - Review package quality
+- `tester` - Test package installations
+- `researcher` - Research vendor update patterns
+
+### MCP Tool Categories
+
+#### Coordination
+`swarm_init`, `agent_spawn`, `task_orchestrate`
+
+#### Monitoring
+`swarm_status`, `agent_list`, `agent_metrics`, `task_status`, `task_results`
+
+### Agent Coordination Protocol
+
+When using Claude-Flow for complex package operations:
+
+**1. BEFORE Work:**
+```bash
+npx claude-flow@alpha hooks pre-task --description "[task]"
+```
+
+**2. AFTER Work:**
+```bash
+npx claude-flow@alpha hooks post-task --task-id "[task]"
+```
+
+### Support
+- Claude-Flow Documentation: https://github.com/ruvnet/claude-flow
+- Claude-Flow Issues: https://github.com/ruvnet/claude-flow/issues
+<!-- End Claude-Flow merge -->
+
+## Important Instruction Reminders
+
+Do what has been asked; nothing more, nothing less.
+NEVER create files unless they're absolutely necessary for achieving your goal.
+ALWAYS prefer editing an existing file to creating a new one.
+NEVER proactively create documentation files (*.md) or README files. Only create documentation files if explicitly requested by the User.
+Never save working files, text/mds and tests to the root folder.
