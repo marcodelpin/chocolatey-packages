@@ -117,6 +117,17 @@ This consistent naming helps with maintaining multiple packages and makes automa
 
 FastStone Image Viewer is a fast, stable, and user-friendly image viewer with editing and conversion capabilities.
 
-- **Current version**: 7.8.0.20250428
+- **Current version**: 8.3
+- **Chocolatey package**: https://community.chocolatey.org/packages/faststone-image-viewer
 - **Update method**: Uses the custom AU script `update.ps1` which automatically extracts the version and URL from the official website.
 - **Structure**: Includes nuspec, installation and uninstallation scripts, plus AU update script.
+
+## Moderation Tracking
+
+Track package moderation status at: https://ch0.co/moderation
+
+| Package | Version | Submitted | Status | Notes |
+|---------|---------|-----------|--------|-------|
+| faststone-image-viewer | 8.3 | 2025-12-02 | ⏳ Pending | Awaiting moderation |
+| faststone-image-viewer | 8.2 | 2025-11-22 | ✅ Ready | Approved |
+| faststone-image-viewer | 8.1 | 2025-08-23 | ✅ Approved | Live |
