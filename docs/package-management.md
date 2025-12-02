@@ -128,6 +128,6 @@ Track package moderation status at: https://ch0.co/moderation
 
 | Package | Version | Submitted | Status | Notes |
 |---------|---------|-----------|--------|-------|
-| faststone-image-viewer | 8.3 | 2025-12-02 | ⏳ Pending | Awaiting moderation |
+| faststone-image-viewer | 8.3 | 2025-12-02 | ✅ Validated | Passed automated checks, awaiting human review |
 | faststone-image-viewer | 8.2 | 2025-11-22 | ✅ Ready | Approved |
 | faststone-image-viewer | 8.1 | 2025-08-23 | ✅ Approved | Live |
