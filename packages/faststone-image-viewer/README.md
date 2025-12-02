@@ -1,6 +1,10 @@
 # FastStone Image Viewer (faststone-image-viewer)
 
+[![Chocolatey](https://img.shields.io/chocolatey/v/faststone-image-viewer)](https://community.chocolatey.org/packages/faststone-image-viewer)
+
 This is a Chocolatey package for FastStone Image Viewer, a fast, stable, and user-friendly image viewer with editing capabilities.
+
+**Chocolatey Package:** https://community.chocolatey.org/packages/faststone-image-viewer
 
 ## Description
 
