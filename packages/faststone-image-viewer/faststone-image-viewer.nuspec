@@ -3,7 +3,7 @@
 <package xmlns="http://schemas.microsoft.com/packaging/2015/06/nuspec.xsd">
   <metadata>
     <id>faststone-image-viewer</id>
-    <version>8.2</version>
+    <version>8.3</version>
     <owners>Marco Del Pin</owners>
     <title>FastStone Image Viewer</title>
     <authors>FastStone Soft</authors>
@@ -18,7 +18,9 @@
 out of date by more than a day or two, please contact the maintainer(s) and
 let them know the package is no longer updating correctly.
 </description>
-    <releaseNotes>Updated to version 8.2 on 2025-11-22
+    <releaseNotes>Updated to version 8.3 on 2025-12-02
+
+Updated to version 8.2 on 2025-11-22
 
 Updated to version 8.1 on 2025-08-23
 

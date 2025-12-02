@@ -155,7 +155,7 @@ The `push-package.ps1` script implements secure API key storage:
 - **Description**: FastStone Image Viewer - fast, stable image browser and editor
 - **Update Method**: AU automation via `update.ps1`
 - **Source**: Scrapes version from FastStone website
-- **Current Version**: 7.8.0.20250428
+- **Current Version**: 8.3
 - **Special Notes**: Uses custom AU script that parses HTML to extract version numbers
 
 <!-- Merged from Claude-Flow -->
